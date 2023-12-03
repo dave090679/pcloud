@@ -8,12 +8,15 @@ import controlTypes
 import api
 from scriptHandler import script
 import addonHandler
-from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA import UIA, ListItem
 # Entfernen Sie das Kommentarzeichen (#) aus der nächsten Zeile, wenn (und sobald) die Datei zu einem Addon gehört. Dadurch werden Lokalisierungsfunktionen (Übersetzungsfunktionen) in Ihrer Datei aktiviert. Weitere Informationen finden Sie im Entwicklungshandbuch für NVDA-Addons.
 #addonHandler.initTranslation()
 class pcloudcheckbox(UIA):
 	def _get_name(self):
 		return self.next.next.name
+class pcloudlistitem(ListItem):
+	def _get_name(self):
+		return self.firstChild.name
 class pcloudlink(UIA):
 	def _get_name(self):
 		return self.firstChild.name
@@ -41,5 +44,7 @@ class AppModule(appModuleHandler.AppModule):
 				clslist.insert(0, pcloudlink)
 			elif obj.role == controlTypes.Role.BUTTON and obj.name == "":
 				clslist.insert(0, pcloudbutton)
+			elif "WpfpCloud.Models.Languages" in obj.name and obj.role == controlTypes.Role.LISTITEM:
+				clslist.insert(0,pcloudlistitem)
 
 
