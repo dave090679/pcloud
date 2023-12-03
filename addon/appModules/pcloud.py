@@ -20,7 +20,11 @@ class pcloudlink(UIA):
 
 class pcloudbutton(UIA):
 	def _get_name(self):
-		return self.children[1].name
+		l = list()
+		for x in self.children:
+			if x.name:
+				l.append(x.name)
+		return "; ".join(l)
 
 class pcloudtabitem(UIA):
 	def _get_name(self):
@@ -28,13 +32,14 @@ class pcloudtabitem(UIA):
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clslist):
-		if "System.Windows.Controls.TabItem" in obj.UIAElement.CachedName:
-			clslist.insert(0, pcloudtabitem)
-		elif obj.role == controlTypes.Role.CHECKBOX and obj.name == "":
-			clslist.insert(0, pcloudcheckbox)
-		elif obj.role == controlTypes.Role.LINK and obj.name.strip() == "":
-			clslist.insert(0, pcloudlink)
-		elif obj.role == controlTypes.Role.BUTTON and obj.name == "":
-			clslist.insert(0, pcloudbutton)
+		if isinstance(obj, UIA):
+			if "System.Windows.Controls.TabItem" in obj.UIAElement.CachedName:
+				clslist.insert(0, pcloudtabitem)
+			elif obj.role == controlTypes.Role.CHECKBOX and obj.name == "":
+				clslist.insert(0, pcloudcheckbox)
+			elif obj.role == controlTypes.Role.LINK and obj.name.strip() == "":
+				clslist.insert(0, pcloudlink)
+			elif obj.role == controlTypes.Role.BUTTON and obj.name == "":
+				clslist.insert(0, pcloudbutton)
 
 
