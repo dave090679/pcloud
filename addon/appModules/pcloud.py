@@ -19,7 +19,11 @@ class pcloudlistitem(ListItem):
 		return self.firstChild.name
 class pcloudlink(UIA):
 	def _get_name(self):
-		return self.firstChild.name
+		try: 
+			s = self.firstChild.name
+		except AttributeError:
+			s = ""
+		return s
 
 class pcloudbutton(UIA):
 	def _get_name(self):

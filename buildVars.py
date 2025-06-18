@@ -20,14 +20,14 @@ addon_info = {
 	"addon_description" : _("""nvda addon for pcloud and pcloud drive
 """),
 	# version
-	"addon_version" : "0.4",
+	"addon_version" : "0.6",
 	# Author(s)
 	"addon_author" : u"David Parduhn <xkill85@gmx.net>",
 	# URL for the add-on documentation support
 	"addon_url" : None,
 	# Documentation file name
 	"addon_docFileName" : "readme.html",
-	"lastTestedNVDAVersion": "2024.1",
+	"lastTestedNVDAVersion": "2025.1",
 	"minimumNVDAVersion": "2022.1"
 }
 
