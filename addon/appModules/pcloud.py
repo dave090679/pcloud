@@ -14,6 +14,10 @@ import addonHandler
 from NVDAObjects.UIA import UIA, ListItem
 # Entfernen Sie das Kommentarzeichen (#) aus der nächsten Zeile, wenn (und sobald) die Datei zu einem Addon gehört. Dadurch werden Lokalisierungsfunktionen (Übersetzungsfunktionen) in Ihrer Datei aktiviert. Weitere Informationen finden Sie im Entwicklungshandbuch für NVDA-Addons.
 #addonHandler.initTranslation()
+class pcloudtabitem(UIA):
+	def _get_name(self):
+		return self.firstChild.next.name
+
 class pcloudcheckbox(UIA):
 	def _get_name(self):
 		return self.next.next.name
