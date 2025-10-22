@@ -3,6 +3,9 @@
 # Copyright (C) 2006-2023 NVDA Mitwirkende
 # Diese Datei unterliegt der GNU General Public License.
 # Weitere Informationen finden Sie in der Datei COPYING.
+# Modify By Rainer Brell "NVDA Nachhaltig" 
+# 2025.10.21: Added classes pcloudtogglebutton, pcloudcombobox 
+
 import appModuleHandler
 import controlTypes
 import api
@@ -33,9 +36,23 @@ class pcloudbutton(UIA):
 				l.append(x.name)
 		return "; ".join(l)
 
-class pcloudtabitem(UIA):
+class pcloudtogglebutton(UIA):
 	def _get_name(self):
-		return self.children[1].name
+		try:
+			try:
+				return self.previous.previous.name
+			except:
+				if self.childCount > 0:
+					return self.children[0].name
+		except:
+			return
+
+class pcloudcombobox(UIA):
+	def _get_name(self):
+		try: 
+			return self.previous.name 
+		except:
+			return 
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clslist):
@@ -48,7 +65,9 @@ class AppModule(appModuleHandler.AppModule):
 				clslist.insert(0, pcloudlink)
 			elif obj.role == controlTypes.Role.BUTTON and obj.name == "":
 				clslist.insert(0, pcloudbutton)
+			elif obj.role == controlTypes.Role.TOGGLEBUTTON and obj.name == "":
+				clslist.insert(0, pcloudtogglebutton)
+			elif obj.role == controlTypes.Role.COMBOBOX and obj.name == "":
+				clslist.insert(0, pcloudcombobox)
 			elif "WpfpCloud.Models.Languages" in obj.name and obj.role == controlTypes.Role.LISTITEM:
 				clslist.insert(0,pcloudlistitem)
-
-
