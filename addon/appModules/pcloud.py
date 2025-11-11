@@ -12,8 +12,9 @@ import api
 from scriptHandler import script
 import addonHandler
 from NVDAObjects.UIA import UIA, ListItem
+import mouseHandler
 # Entfernen Sie das Kommentarzeichen (#) aus der nächsten Zeile, wenn (und sobald) die Datei zu einem Addon gehört. Dadurch werden Lokalisierungsfunktionen (Übersetzungsfunktionen) in Ihrer Datei aktiviert. Weitere Informationen finden Sie im Entwicklungshandbuch für NVDA-Addons.
-#addonHandler.initTranslation()
+addonHandler.initTranslation()
 class pcloudtabitem(UIA):
 	def _get_name(self):
 		return self.firstChild.next.name
@@ -22,8 +23,21 @@ class pcloudcheckbox(UIA):
 	def _get_name(self):
 		return self.next.next.name
 class pcloudlistitem(ListItem):
+	@script (
+		category=_('pcloud'),
+		description=_("do a left mouse click"),
+		gestures=["kb:enter", "kb:space"]
+	)
+	def script_leftmouseclick(self, gesture):
+		api.moveMouseToNVDAObject(self)
+		mouseHandler.doPrimaryClick()
+
 	def _get_name(self):
-		return self.firstChild.name
+		l = list()
+		for x in self.children:
+			if x.name != "":
+				l.append(x.name)
+		return '; '.join(l)
 class pcloudlink(UIA):
 	def _get_name(self):
 		try: 
@@ -74,4 +88,6 @@ class AppModule(appModuleHandler.AppModule):
 			elif obj.role == controlTypes.Role.COMBOBOX and obj.name == "":
 				clslist.insert(0, pcloudcombobox)
 			elif "WpfpCloud.Models.Languages" in obj.name and obj.role == controlTypes.Role.LISTITEM:
+				clslist.insert(0,pcloudlistitem)
+			elif obj.name == "System.Windows.Controls.ListViewItem":
 				clslist.insert(0,pcloudlistitem)
