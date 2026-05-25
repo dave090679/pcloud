@@ -10,7 +10,6 @@ from site_scons.site_tools.NVDATool.typings import AddonInfo, BrailleTables, Sym
 # which returns whatever is given to it as an argument.
 from site_scons.site_tools.NVDATool.utils import _
 
-
 # Add-on information variables
 addon_info = AddonInfo(
 	# add-on Name/identifier, internal for NVDA
@@ -23,11 +22,10 @@ addon_info = AddonInfo(
 	addon_description=_("""nvda addon for pcloud and pcloud drive
 """),
 	# version
-	addon_version="0.9",
+	addon_version="0.9.1",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""Changelog for the add-on version.
-It can span multiple lines."""),
+	addon_changelog=_("0.9.1: updated manifest to configm 2026.1.x compatibility"),
 	# Author(s)
 	addon_author="David Parduhn <xkill85@gmx.net>",
 	# URL for the add-on documentation support
@@ -39,7 +37,7 @@ It can span multiple lines."""),
 	# Minimum NVDA version supported (e.g. "2019.3.0", minor version is optional)
 	addon_minimumNVDAVersion="2022.1",
 	# Last NVDA version supported/tested (e.g. "2024.4.0", ideally more recent than minimum version)
-	addon_lastTestedNVDAVersion="2025.3.2",
+	addon_lastTestedNVDAVersion="2026.1.1",
 	# Add-on update channel (default is None, denoting stable releases,
 	# and for development releases, use "dev".)
 	# Do not change unless you know what you are doing!
